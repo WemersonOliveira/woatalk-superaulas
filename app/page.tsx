@@ -1,6 +1,5 @@
+
 import Image from "next/image";
-import { LeadForm } from "@/components/lead-form";
-import { readLeadConfig } from "@/lib/leads/config";
 import { BrandLogo } from "@/components/brand-logo";
 import {
   ArrowDown,
@@ -221,7 +220,6 @@ export default function Home() {
               </ul>
             </section>
           </section>
-          <LeadForm available={Boolean(readLeadConfig(process.env))} />
           <Enrollment />
         </div>
       </main>
