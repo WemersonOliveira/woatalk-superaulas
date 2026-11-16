@@ -1,3 +1,4 @@
+
 export type Lesson = {
   id: number;
   title: string;
@@ -8,6 +9,7 @@ export type Lesson = {
   pdf: string | null;
   image: string | null;
 };
+
 export const lessons: Lesson[] = [
   {
     id: 1,
@@ -50,12 +52,14 @@ export const lessons: Lesson[] = [
     image: "/images/eagle.webp",
   },
 ];
+
 export const lots = [
   { id: 1, dates: "01 a 08/11", start: "2026-11-01", end: "2026-11-08" },
   { id: 2, dates: "09 a 15/11", start: "2026-11-09", end: "2026-11-15" },
   { id: 3, dates: "16 a 22/11", start: "2026-11-16", end: "2026-11-22" },
   { id: 4, dates: "23 a 30/11", start: "2026-11-23", end: "2026-11-30" },
 ] as const;
+
 export const plans = [
   {
     id: "3-meses",
@@ -91,7 +95,9 @@ export const plans = [
     ],
   },
 ] as const;
-// Preencher apenas com dados oficiais aprovados. Ausência nunca produz links fictícios.
+
+// Preencher apenas com dados oficiais aprovados.
+// Ausência nunca produz links fictícios.
 export const integrations = {
   checkout: {
     "3-meses-lote-1": "https://www.asaas.com/000/c/9eg0onuzb6usegto",
@@ -107,7 +113,7 @@ export const integrations = {
     "1-ano-lote-3": "https://www.asaas.com/000/c/o5ejwsdqnni48pwh",
     "1-ano-lote-4": "https://www.asaas.com/000/c/305oza8z8wbti6yg",
   } as Record<string, string>,
-  whatsapp: "556181176884" as string | null, // DDI + DDD + número, apenas dígitos.
+  whatsapp: "556181176884" as string | null,
   pixUrl: "https://www.asaas.com/000/c/zdi9uwkmtojxpfeb" as string | null,
   assets: {
     ocean: "/images/ocean.webp" as string | null,
@@ -115,6 +121,7 @@ export const integrations = {
     galaxy: "/images/galaxy.webp" as string | null,
   },
 };
+
 export const benefits = [
   "Aulas semanais de conversação ao vivo",
   "Turmas exclusivas de até 7 alunos",
@@ -122,6 +129,7 @@ export const benefits = [
   "WOA PLAY: +400 aulas, mentorias e materiais",
   "Comunidade para praticar idiomas",
 ];
+
 export const languages = [
   { flag: "/images/flags/us.svg", name: "Inglês" },
   { flag: "/images/flags/fr.svg", name: "Francês" },
@@ -129,24 +137,49 @@ export const languages = [
   { flag: "/images/flags/it.svg", name: "Italiano" },
   { flag: "/images/flags/ru.svg", name: "Russo" },
 ];
+
 export const currency = (value: number) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-    value,
-  );
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+
+/**
+ * Adiciona o prefixo oficial aos caminhos dos assets.
+ *
+ * Exemplos:
+ * /images/ocean.webp
+ * -> /blacknovember/superaulas/images/ocean.webp
+ *
+ * /materials/aula-1.pdf
+ * -> /blacknovember/superaulas/materials/aula-1.pdf
+ */
 export function assetPath(path: string) {
-  return `${process.env.NEXT_PUBLIC_BASE_PATH ?? "/BlackNovember/superaulas"}${path}`;
+  const basePath =
+    process.env.NEXT_PUBLIC_BASE_PATH ??
+    "/blacknovember/superaulas";
+
+  return `${basePath}${path}`;
 }
-export function safeHttps(url: string | null | undefined): string | null {
+
+export function safeHttps(
+  url: string | null | undefined,
+): string | null {
   if (!url) return null;
+
   try {
     const parsed = new URL(url);
-    return parsed.protocol === "https:" && !parsed.username && !parsed.password
+
+    return parsed.protocol === "https:" &&
+      !parsed.username &&
+      !parsed.password
       ? parsed.href
       : null;
   } catch {
     return null;
   }
 }
+
 export function pdfPath(path: string | null): string | null {
   if (
     path?.startsWith("/") &&
@@ -154,13 +187,18 @@ export function pdfPath(path: string | null): string | null {
     !/[\\?#]/.test(path) &&
     path.endsWith(".pdf") &&
     !path.split("/").includes("..")
-  )
+  ) {
     return assetPath(path);
+  }
+
   return safeHttps(path);
 }
+
 export function whatsappUrl(number: string | null): string | null {
   return number && /^[1-9]\d{9,14}$/.test(number)
-    ? `https://wa.me/${number}?text=${encodeURIComponent("Olá! Quero confirmar minha matrícula WOA Exclusive — Black November 2026.")}`
+    ? `https://wa.me/${number}?text=${encodeURIComponent(
+        "Olá! Quero confirmar minha matrícula WOA Exclusive — Black November 2026.",
+      )}`
     : null;
 }
 
@@ -171,16 +209,26 @@ export function campaignDate(now: Date): string {
     month: "2-digit",
     day: "2-digit",
   }).formatToParts(now);
+
   const value = (type: string) =>
     parts.find((part) => part.type === type)!.value;
+
   return `${value("year")}-${value("month")}-${value("day")}`;
 }
-export function lotStatus(lot: (typeof lots)[number], date: string | null) {
+
+export function lotStatus(
+  lot: (typeof lots)[number],
+  date: string | null,
+) {
   if (!date) return "Verificando lote";
   if (date < lot.start) return "Em breve";
   if (date > lot.end) return "Encerrado";
+
   return "Vigente";
 }
+
 export function currentLot(date: string | null) {
-  return lots.find((lot) => lotStatus(lot, date) === "Vigente");
+  return lots.find(
+    (lot) => lotStatus(lot, date) === "Vigente",
+  );
 }
