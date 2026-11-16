@@ -1,6 +1,5 @@
+
 import Image from "next/image";
-import { LeadForm } from "@/components/lead-form";
-import { readLeadConfig } from "@/lib/leads/config";
 import { BrandLogo } from "@/components/brand-logo";
 import {
   ArrowDown,
@@ -24,22 +23,38 @@ import {
   integrations,
   assetPath,
 } from "@/lib/campaign";
-const icons = [MessageSquare, Users, Smartphone, CirclePlay, Globe2];
+
+const icons = [
+  MessageSquare,
+  Users,
+  Smartphone,
+  CirclePlay,
+  Globe2,
+];
+
 export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <>
       <header className="site-header campaign-header">
-        <BrandLogo priority sizes="(max-width: 700px) 110px, 240px" />
+        <BrandLogo
+          priority
+          sizes="(max-width: 700px) 110px, 240px"
+        />
+
         <div
           className="campaign-lockup"
           aria-label="Black November — WOA Talk 2026"
         >
           <p className="campaign-black">BLACK</p>
           <p className="campaign-november">NOVEMBER</p>
-          <p className="campaign-year">WOA TALK / 2026</p>
+          <p className="campaign-year">
+            WOA TALK / 2026
+          </p>
         </div>
       </header>
+
       <main id="conteudo">
         <section
           className="hero campaign-hero"
@@ -56,46 +71,72 @@ export default function Home() {
               className="artwork"
             />
           )}
+
           <div className="hero-inner">
             <div className="hero-copy">
-              <span className="eyebrow">BLACK NOVEMBER WOA TALK</span>
+              <span className="eyebrow">
+                BLACK NOVEMBER WOA TALK
+              </span>
+
               <p className="exclusive">
                 WOA <span>EXCLUSIVE</span>
               </p>
+
               <h1 id="hero-title">
                 Desbloqueie sua
                 <br />
                 <em>conversação.</em>
               </h1>
+
               <p className="hero-description">
                 <strong>
-                  Mais de 15 anos de experiência no ensino de idiomas.
+                  Mais de 15 anos de experiência no ensino
+                  de idiomas.
                 </strong>
               </p>
+
               <div className="hero-actions">
-                <a className="button button-yellow" href="#superaulas">
+                <a
+                  className="button button-yellow"
+                  href="#superaulas"
+                >
                   Explorar as superaulas{" "}
-                  <ArrowDown size={18} aria-hidden="true" />
+                  <ArrowDown
+                    size={18}
+                    aria-hidden="true"
+                  />
                 </a>
+
                 <a className="text-link" href="#planos">
-                  Ver planos <ArrowUpRight size={17} aria-hidden="true" />
+                  Ver planos{" "}
+                  <ArrowUpRight
+                    size={17}
+                    aria-hidden="true"
+                  />
                 </a>
               </div>
+
               <div className="hero-meta">
                 <span>
                   04 <small>SUPERAULAS</small>
                 </span>
+
                 <span>
                   05 <small>IDIOMAS PARA EXPLORAR</small>
                 </span>
+
                 <span>
                   01 <small>NOVO COMEÇO</small>
                 </span>
               </div>
             </div>
+
             <div className="hero-art">
               {integrations.assets.galaxy && (
-                <div className="galaxy-backdrop" aria-hidden="true">
+                <div
+                  className="galaxy-backdrop"
+                  aria-hidden="true"
+                >
                   <Image
                     src={assetPath(integrations.assets.galaxy)}
                     alt=""
@@ -105,6 +146,7 @@ export default function Home() {
                   />
                 </div>
               )}
+
               {integrations.assets.eagle ? (
                 <Image
                   src={assetPath(integrations.assets.eagle)}
@@ -116,19 +158,33 @@ export default function Home() {
                 />
               ) : (
                 <div className="art-pending">
-                  <Orbit size={100} strokeWidth={0.65} aria-hidden="true" />
-                  <span>EXPLORE. CONVERSE. EVOLUA.</span>
+                  <Orbit
+                    size={100}
+                    strokeWidth={0.65}
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    EXPLORE. CONVERSE. EVOLUA.
+                  </span>
+
                   <small>
-                    Arte da águia astronauta aguardando arquivo original
+                    Arte da águia astronauta aguardando
+                    arquivo original
                   </small>
                 </div>
               )}
+
               <span className="art-caption">
-                <Sparkles size={16} aria-hidden="true" /> SEU INGLÊS PODE IR
-                ALÉM.
+                <Sparkles
+                  size={16}
+                  aria-hidden="true"
+                />
+                SEU INGLÊS PODE IR ALÉM.
               </span>
             </div>
           </div>
+
           <a
             className="scroll-cue"
             href="#superaulas"
@@ -137,6 +193,7 @@ export default function Home() {
             <ArrowDown size={18} />
           </a>
         </section>
+
         <div
           className="content-shell"
           style={{
@@ -154,16 +211,22 @@ export default function Home() {
             >
               As 4 <em>superaulas</em>
             </SectionHeading>
+
             <div className="lessons-grid">
               {lessons.map((lesson) => (
-                <LessonCard key={lesson.id} lesson={lesson} />
+                <LessonCard
+                  key={lesson.id}
+                  lesson={lesson}
+                />
               ))}
             </div>
+
             <p className="section-footnote">
-              Os quatro PDFs já estão disponíveis. Assista à Aula 01; novos
-              vídeos em breve.
+              Os quatro PDFs já estão disponíveis.
+              Assista à Aula 01; novos vídeos em breve.
             </p>
           </section>
+
           <section
             id="planos"
             className="plans-section"
@@ -175,35 +238,56 @@ export default function Home() {
             >
               Planos de <em>conversação</em>
             </SectionHeading>
+
             <PricingTable />
           </section>
+
           <section
             className="benefits-section"
             aria-labelledby="benefits-title"
           >
-            <span className="eyebrow" id="benefits-title">
+            <span
+              className="eyebrow"
+              id="benefits-title"
+            >
               O QUE VOCÊ RECEBE
             </span>
+
             <ul className="benefits">
               {benefits.map((benefit, index) => {
                 const Icon = icons[index];
+
                 return (
                   <li key={benefit}>
-                    <Icon size={30} strokeWidth={1.6} aria-hidden="true" />
+                    <Icon
+                      size={30}
+                      strokeWidth={1.6}
+                      aria-hidden="true"
+                    />
                     <span>{benefit}</span>
                   </li>
                 );
               })}
             </ul>
-            <section className="languages" aria-labelledby="languages-title">
+
+            <section
+              className="languages"
+              aria-labelledby="languages-title"
+            >
               <div>
-                <h3 id="languages-title">IDIOMAS DISPONÍVEIS</h3>
+                <h3 id="languages-title">
+                  IDIOMAS DISPONÍVEIS
+                </h3>
+
                 <p>
                   Um mundo de possibilidades.
                   <br />
-                  <strong>Qual idioma combina com você?</strong>
+                  <strong>
+                    Qual idioma combina com você?
+                  </strong>
                 </p>
               </div>
+
               <ul>
                 {languages.map((language) => (
                   <li key={language.name}>
@@ -221,19 +305,33 @@ export default function Home() {
               </ul>
             </section>
           </section>
-          <LeadForm available={Boolean(readLeadConfig(process.env))} />
+
+          {/* Formulário de interesse removido. */}
           <Enrollment />
         </div>
       </main>
+
       <footer>
         <BrandLogo />
-        <p>WOA Exclusive · Black November 2026</p>
-        <span>WOA TALK — Sua jornada para destravar a conversação! <a href={assetPath("/privacidade")}>Política de Privacidade</a></span>
+
+        <p>
+          WOA Exclusive · Black November 2026
+        </p>
+
+        <span>
+          WOA TALK — Sua jornada para destravar a
+          conversação!{" "}
+          <a href={assetPath("/privacidade")}>
+            Política de Privacidade
+          </a>
+        </span>
       </footer>
+
       <div className="review-banner">
         PRÉVIA PARA REVISÃO{" "}
         <span>
-          Vídeos das aulas 02 a 04 em breve. Página ainda não publicada.
+          Vídeos das aulas 02 a 04 em breve.
+          Página ainda não publicada.
         </span>
       </div>
     </>
